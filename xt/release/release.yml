@@ -1,1 +1,7 @@
---- {}
+---
+pod_spelling_system:
+  stopwords:
+    - FileFinder
+    - filename
+    - filenames
+    - JavaScript
