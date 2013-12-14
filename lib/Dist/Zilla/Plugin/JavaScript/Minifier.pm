@@ -1,7 +1,6 @@
 package Dist::Zilla::Plugin::JavaScript::Minifier;
 
 use Moose;
-use v5.10;
 use JavaScript::Minifier::XS qw( minify );
 use Dist::Zilla::File::FromCode;
 
