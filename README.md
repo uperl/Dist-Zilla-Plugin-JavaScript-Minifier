@@ -50,7 +50,7 @@ This method adds the compressed JavaScript files to your distribution.
 
 # AUTHOR
 
-Graham Ollis <plicease@cpan.org>
+Graham Ollis &lt;plicease@cpan.org>
 
 # COPYRIGHT AND LICENSE
 

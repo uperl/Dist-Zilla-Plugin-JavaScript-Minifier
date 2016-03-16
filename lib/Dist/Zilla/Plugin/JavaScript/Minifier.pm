@@ -20,7 +20,6 @@ which has been compressed.
 =cut
 
 with 'Dist::Zilla::Role::FileGatherer';
-with 'Dist::Zilla::Role::FileInjector';
 
 use namespace::autoclean;
 
