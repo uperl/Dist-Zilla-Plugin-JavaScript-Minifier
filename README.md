@@ -42,12 +42,6 @@ which generates a `foo.min.js` for each `foo.js`.
 Output filename.  Not used by default, but if specified, all JavaScript files are merged and
 compressed into a single file using this as the output filename.
 
-# METHODS
-
-## $plugin->gather\_files( $arg )
-
-This method adds the compressed JavaScript files to your distribution.
-
 # AUTHOR
 
 Graham Ollis &lt;plicease@cpan.org>

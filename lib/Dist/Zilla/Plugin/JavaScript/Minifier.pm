@@ -75,14 +75,6 @@ has output => (
   isa => 'Str',
 );
 
-=head1 METHODS
-
-=head2 $plugin-E<gt>gather_files( $arg )
-
-This method adds the compressed JavaScript files to your distribution.
-
-=cut
-
 sub gather_files
 {
   my($self, $arg) = @_;
