@@ -1,11 +1,10 @@
-package Dist::Zilla::Plugin::JavaScript::Minifier;
+package Dist::Zilla::Plugin::JavaScript::Minifier {
 
-use Moose;
-use JavaScript::Minifier::XS qw( minify );
-use Dist::Zilla::File::FromCode;
+  use Moose;
+  use JavaScript::Minifier::XS qw( minify );
+  use Dist::Zilla::File::FromCode;
 
-# ABSTRACT: Minify JavaScript in your dist.
-# VERSION
+  # ABSTRACT: Minify JavaScript in your dist.
 
 =head1 SYNOPSIS
 
@@ -40,10 +39,10 @@ this:
 
 =cut
 
-has finder => (
-  is  => 'ro',
-  isa => 'Str',
-);
+  has finder => (
+    is  => 'ro',
+    isa => 'Str',
+  );
 
 =head2 output_regex
 
@@ -57,11 +56,11 @@ which generates a C<foo.min.js> for each C<foo.js>.
 
 =cut
 
-has output_regex => (
-  is      => 'ro',
-  isa     => 'Str',
-  default => '/\.js$/.min.js/',
-);
+  has output_regex => (
+    is      => 'ro',
+    isa     => 'Str',
+    default => '/\.js$/.min.js/',
+  );
 
 =head2 output
 
@@ -70,56 +69,57 @@ compressed into a single file using this as the output filename.
 
 =cut
 
-has output => (
-  is  => 'ro',
-  isa => 'Str',
-);
+  has output => (
+    is  => 'ro',
+    isa => 'Str',
+  );
 
-sub gather_files
-{
-  my($self, $arg) = @_;
-  
-  my $list = sub {
-    defined $self->finder 
-    ? @{ $self->zilla->find_files($self->finder) }
-    : grep { $_->name =~ /\.js$/ && $_->name !~ /\.min\./ } @{ $self->zilla->files };
-  };
-  
-  if(defined $self->output)
+  sub gather_files
   {
-    my $min_file;
-    $min_file = Dist::Zilla::File::FromCode->new({
-      name => $self->output,
-      code => sub {
-        my @list = $list->();
-        $self->log("compressing " . join(', ', map { $_->name } @list) . " => " . $min_file->name);
-        minify(join("\n", map { $_->content } @list));
-      },
-    });
-    
-    $self->add_file($min_file);
-  }
-  else
-  {
-    foreach my $file ($list->()) {
+    my($self, $arg) = @_;
+  
+    my $list = sub {
+      defined $self->finder 
+      ? @{ $self->zilla->find_files($self->finder) }
+      : grep { $_->name =~ /\.js$/ && $_->name !~ /\.min\./ } @{ $self->zilla->files };
+    };
+  
+    if(defined $self->output)
+    {
       my $min_file;
       $min_file = Dist::Zilla::File::FromCode->new({
-        name => do {
-          my $min_filename = $file->name;
-          eval q{ $min_filename =~ s} . $self->output_regex;
-          $min_filename;
-        },
+        name => $self->output,
         code => sub {
-          $self->log("compressing " . $file->name . " => " . $min_file->name);
-          minify($file->content);
+          my @list = $list->();
+          $self->log("compressing " . join(', ', map { $_->name } @list) . " => " . $min_file->name);
+          minify(join("\n", map { $_->content } @list));
         },
       });
     
       $self->add_file($min_file);
     }
+    else
+    {
+      foreach my $file ($list->()) {
+        my $min_file;
+        $min_file = Dist::Zilla::File::FromCode->new({
+          name => do {
+            my $min_filename = $file->name;
+            eval q{ $min_filename =~ s} . $self->output_regex;
+            $min_filename;
+          },
+          code => sub {
+            $self->log("compressing " . $file->name . " => " . $min_file->name);
+            minify($file->content);
+          },
+        });
+    
+        $self->add_file($min_file);
+      }
+    }
   }
-}
 
-__PACKAGE__->meta->make_immutable;
+  __PACKAGE__->meta->make_immutable;
+}
 
 1;
