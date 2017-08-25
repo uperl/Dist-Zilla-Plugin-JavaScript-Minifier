@@ -15,7 +15,6 @@ $modules{$_} = $_ for qw(
   JavaScript::Minifier::XS
   Moose
   Test2::V0
-  Test::More
   namespace::autoclean
 );
 
