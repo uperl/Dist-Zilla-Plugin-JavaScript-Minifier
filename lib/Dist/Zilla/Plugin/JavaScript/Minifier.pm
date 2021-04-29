@@ -1,6 +1,8 @@
 package Dist::Zilla::Plugin::JavaScript::Minifier {
 
   use Moose;
+  use 5.020;
+  use experimental qw( postderef );
   use JavaScript::Minifier::XS qw( minify );
   use Dist::Zilla::File::FromCode;
 
@@ -80,8 +82,8 @@ compressed into a single file using this as the output filename.
   
     my $list = sub {
       defined $self->finder 
-      ? @{ $self->zilla->find_files($self->finder) }
-      : grep { $_->name =~ /\.js$/ && $_->name !~ /\.min\./ } @{ $self->zilla->files };
+      ? $self->zilla->find_files($self->finder)->@*
+      : grep { $_->name =~ /\.js$/ && $_->name !~ /\.min\./ } $self->zilla->files->@*;
     };
   
     if(defined $self->output)

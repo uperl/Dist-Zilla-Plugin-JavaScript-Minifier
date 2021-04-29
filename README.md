@@ -1,10 +1,12 @@
-# Dist::Zilla::Plugin::JavaScript::Minifier
+# Dist::Zilla::Plugin::JavaScript::Minifier ![linux](https://github.com/uperl/Dist-Zilla-Plugin-JavaScript-Minifier/workflows/linux/badge.svg) ![macos](https://github.com/uperl/Dist-Zilla-Plugin-JavaScript-Minifier/workflows/macos/badge.svg) ![windows](https://github.com/uperl/Dist-Zilla-Plugin-JavaScript-Minifier/workflows/windows/badge.svg) ![cygwin](https://github.com/uperl/Dist-Zilla-Plugin-JavaScript-Minifier/workflows/cygwin/badge.svg) ![msys2-mingw](https://github.com/uperl/Dist-Zilla-Plugin-JavaScript-Minifier/workflows/msys2-mingw/badge.svg)
 
 Minify JavaScript in your dist.
 
 # SYNOPSIS
 
-    [JavaScript::Minifier]
+```
+[JavaScript::Minifier]
+```
 
 # DESCRIPTION
 
@@ -21,19 +23,23 @@ you want compressed.  If this is not specified, it will compress all the JavaScr
 files that do not have a `.min.` in their filenames.  Roughly equivalent to
 this:
 
-    [FileFinder::ByName / JavaScriptFiles]
-    file = *.js
-    skip = .min.
-    [JavaScript::Minifier]
-    finder = JavaScriptFiles
+```
+[FileFinder::ByName / JavaScriptFiles]
+file = *.js
+skip = .min.
+[JavaScript::Minifier]
+finder = JavaScriptFiles
+```
 
 ## output\_regex
 
 Regular expression substitution used to generate the output filenames.  By default
 this is
 
-    [JavaScript::Minifier]
-    output_regex = /\.js$/.min.js/
+```
+[JavaScript::Minifier]
+output_regex = /\.js$/.min.js/
+```
 
 which generates a `foo.min.js` for each `foo.js`.
 
