@@ -1,2 +1,4 @@
 /Dist-Zilla-Plugin-JavaScript-Minifier-*
 /.build
+*.old
+*.orig
